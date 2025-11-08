@@ -24,11 +24,14 @@
       </div>
 
       <div class="mb-3">
-        <%= form.label :author, class: "form-label" %>
-        <%= form.text_field :author, class: "form-control #{'is-invalid' if book.errors[:author].any?}", required: true %>
-        <% if book.errors[:author].any? %>
+        <%= form.label :author_id, "Author", class: "form-label" %>
+        <%= form.select :author_id, 
+            options_from_collection_for_select(Author.active.order(:name), :id, :name, book.author_id),
+            { include_blank: "Select an author (optional)" },
+            { class: "form-select #{'is-invalid' if book.errors[:author_id].any?}" } %>
+        <% if book.errors[:author_id].any? %>
           <div class="invalid-feedback">
-            <%= book.errors[:author].first %>
+            <%= book.errors[:author_id].first %>
           </div>
         <% end %>
       </div>

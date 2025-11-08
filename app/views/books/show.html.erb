@@ -24,7 +24,7 @@
       <dd class="col-sm-9"><%= @book.title %></dd>
 
       <dt class="col-sm-3">Author:</dt>
-      <dd class="col-sm-9"><%= @book.author %></dd>
+      <dd class="col-sm-9"><%= @book.author&.name || "N/A" %></dd>
 
       <dt class="col-sm-3">Year:</dt>
       <dd class="col-sm-9"><%= @book.year %></dd>
