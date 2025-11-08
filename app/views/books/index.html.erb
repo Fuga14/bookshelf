@@ -7,6 +7,35 @@
   <% end %>
 </div>
 
+<!-- Search and Sort Form -->
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <%= form_with url: books_path, method: :get, local: true, class: "row g-3" do |form| %>
+      <div class="col-md-6">
+        <%= form.text_field :search, 
+            value: params[:search], 
+            placeholder: "Search by title...", 
+            class: "form-control" %>
+      </div>
+      <div class="col-md-4">
+        <%= form.select :sort, 
+            options_for_select([
+              ["Sort by...", ""],
+              ["Year (Ascending)", "year_asc"],
+              ["Year (Descending)", "year_desc"],
+              ["Title (A-Z)", "title_asc"],
+              ["Title (Z-A)", "title_desc"]
+            ], params[:sort]),
+            {},
+            { class: "form-select" } %>
+      </div>
+      <div class="col-md-2">
+        <%= form.submit "Search", class: "btn btn-primary w-100" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
 <% if @books.any? %>
   <div class="row g-4">
     <% @books.each do |book| %>
@@ -17,7 +46,7 @@
               <%= book.title %>
             </h5>
             <p class="card-text">
-              <strong>Author:</strong> <%= book.author %><br>
+              <strong>Author:</strong> <%= book.author&.name || "N/A" %><br>
               <strong>Year:</strong> <%= book.year %><br>
               <% if book.description.present? %>
                 <strong>Description:</strong>

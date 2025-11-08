@@ -2,7 +2,26 @@ class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
   def index
-    @books = Book.all.order(created_at: :desc)
+    @books = Book.includes(:author).all
+    
+    # Search by title
+    if params[:search].present?
+      @books = @books.where("title ILIKE ?", "%#{params[:search]}%")
+    end
+    
+    # Sort by year or title
+    case params[:sort]
+    when "year_asc"
+      @books = @books.order(year: :asc)
+    when "year_desc"
+      @books = @books.order(year: :desc)
+    when "title_asc"
+      @books = @books.order(title: :asc)
+    when "title_desc"
+      @books = @books.order(title: :desc)
+    else
+      @books = @books.order(created_at: :desc)
+    end
   end
 
   def show
@@ -10,9 +29,11 @@ class BooksController < ApplicationController
 
   def new
     @book = Book.new
+    @authors = Author.active.order(:name)
   end
 
   def edit
+    @authors = Author.active.order(:name)
   end
 
   def create
@@ -45,6 +66,6 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :author, :year, :description)
+    params.require(:book).permit(:title, :author_id, :year, :description)
   end
 end
