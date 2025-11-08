@@ -1,0 +1,59 @@
+<%= form_with(model: book, local: true, class: "needs-validation", novalidate: true) do |form| %>
+  <% if book.errors.any? %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <h4 class="alert-heading"><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h4>
+      <ul class="mb-0">
+        <% book.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  <% end %>
+
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="mb-3">
+        <%= form.label :title, class: "form-label" %>
+        <%= form.text_field :title, class: "form-control #{'is-invalid' if book.errors[:title].any?}", required: true %>
+        <% if book.errors[:title].any? %>
+          <div class="invalid-feedback">
+            <%= book.errors[:title].first %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :author, class: "form-label" %>
+        <%= form.text_field :author, class: "form-control #{'is-invalid' if book.errors[:author].any?}", required: true %>
+        <% if book.errors[:author].any? %>
+          <div class="invalid-feedback">
+            <%= book.errors[:author].first %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :year, class: "form-label" %>
+        <%= form.number_field :year, class: "form-control #{'is-invalid' if book.errors[:year].any?}", min: 1900, max: 2030, required: true %>
+        <% if book.errors[:year].any? %>
+          <div class="invalid-feedback">
+            <%= book.errors[:year].first %>
+          </div>
+        <% end %>
+        <div class="form-text">Year must be between 1900 and 2030</div>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :description, class: "form-label" %>
+        <%= form.text_area :description, class: "form-control", rows: 5 %>
+      </div>
+
+      <div class="d-flex gap-2">
+        <%= form.submit class: "btn btn-primary" %>
+        <%= link_to "Cancel", books_path, class: "btn btn-secondary" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
