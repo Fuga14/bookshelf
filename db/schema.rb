@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_08_223230) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_09_133358) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -30,8 +30,29 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_08_223230) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "author_id"
+    t.text "cover_data"
     t.index ["author_id"], name: "index_books_on_author_id"
   end
 
+  create_table "imports", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "created_count", default: 0
+    t.integer "skipped_count", default: 0
+    t.float "execution_time"
+    t.string "status", default: "pending"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_imports_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.boolean "admin", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "books", "authors"
+  add_foreign_key "imports", "users"
 end

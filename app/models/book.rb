@@ -1,4 +1,6 @@
 class Book < ApplicationRecord
+  include CoverUploader::Attachment(:cover)
+
   belongs_to :author, optional: true
   
   validates :title, presence: true

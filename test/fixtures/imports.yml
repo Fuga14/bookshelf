@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  created_count: 1
+  skipped_count: 1
+  execution_time: 1.5
+  status: MyString
+
+two:
+  user: two
+  created_count: 1
+  skipped_count: 1
+  execution_time: 1.5
+  status: MyString

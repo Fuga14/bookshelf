@@ -1,4 +1,4 @@
-<%= form_with(model: book, local: true, class: "needs-validation", novalidate: true) do |form| %>
+<%= form_with(model: book, local: true, multipart: true, class: "needs-validation", novalidate: true) do |form| %>
   <% if book.errors.any? %>
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
       <h4 class="alert-heading"><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h4>
@@ -50,6 +50,28 @@
       <div class="mb-3">
         <%= form.label :description, class: "form-label" %>
         <%= form.text_area :description, class: "form-control", rows: 5 %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :cover, "Cover Image", class: "form-label" %>
+        <%= form.hidden_field :cover, value: book.cached_cover_data, id: nil %>
+        <%= form.file_field :cover, class: "form-control #{'is-invalid' if book.errors[:cover].any?}", accept: "image/*" %>
+        <% if book.errors[:cover].any? %>
+          <div class="invalid-feedback d-block">
+            <%= book.errors[:cover].first %>
+          </div>
+        <% end %>
+        <div class="form-text">Upload a cover image (max 5 MB, JPEG, PNG, GIF, or WebP)</div>
+        
+        <% if book.cover.present? %>
+          <div class="mt-3">
+            <p class="mb-2"><strong>Current Cover:</strong></p>
+            <% cover_url = book.cover_url(:thumbnail) || book.cover_url %>
+            <% if cover_url %>
+              <%= image_tag cover_url.to_s, alt: "Book cover", class: "img-thumbnail", style: "max-width: 200px;" %>
+            <% end %>
+          </div>
+        <% end %>
       </div>
 
       <div class="d-flex gap-2">

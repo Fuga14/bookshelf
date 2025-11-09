@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Import Books Report</h1>
+    
+    <p>Hello <%= @user.name %>,</p>
+    
+    <p>The book import has been completed with the following results:</p>
+    
+    <ul>
+      <li><strong>Status:</strong> <%= @import.status.humanize %></li>
+      <li><strong>Books Created:</strong> <%= @import.created_count %></li>
+      <li><strong>Books Skipped:</strong> <%= @import.skipped_count %></li>
+      <li><strong>Execution Time:</strong> <%= @import.execution_time.round(2) %> seconds</li>
+      <li><strong>Started At:</strong> <%= @import.created_at.strftime("%Y-%m-%d %H:%M:%S") %></li>
+      <li><strong>Completed At:</strong> <%= @import.updated_at.strftime("%Y-%m-%d %H:%M:%S") %></li>
+    </ul>
+    
+    <p>Thank you for using Bookshelf!</p>
+  </body>
+</html>
+

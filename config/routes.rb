@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   
   resources :books
   resources :authors, only: [:index]
+  resources :imports, only: [:new, :create]
 
   # API routes
   namespace :api do

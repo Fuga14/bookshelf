@@ -37,6 +37,16 @@
           <span class="text-muted">No description provided</span>
         <% end %>
       </dd>
+
+      <% if @book.cover.present? %>
+        <dt class="col-sm-3">Cover:</dt>
+        <dd class="col-sm-9">
+          <% cover_url = @book.cover_url(:medium) || @book.cover_url %>
+          <% if cover_url %>
+            <%= image_tag cover_url.to_s, alt: "Book cover", class: "img-fluid rounded shadow-sm", style: "max-width: 400px;" %>
+          <% end %>
+        </dd>
+      <% end %>
     </dl>
   </div>
 </div>
