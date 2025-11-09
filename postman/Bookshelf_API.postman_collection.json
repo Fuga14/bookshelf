@@ -1,0 +1,462 @@
+{
+	"info": {
+		"_postman_id": "bookshelf-api-v1",
+		"name": "Bookshelf API v1",
+		"description": "API для управління книгами та авторами. Включає ендпоїнти для отримання списку книг з пагінацією, пошуком та фільтрацією, а також отримання деталей конкретної книги.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "Get All Books",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/books",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"books"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Номер сторінки для пагінації (за замовчуванням: 1)",
+									"disabled": true
+								},
+								{
+									"key": "per_page",
+									"value": "10",
+									"description": "Кількість записів на сторінці (за замовчуванням: 10, максимум: 100)",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "",
+									"description": "Пошук за назвою книги (case-insensitive, частковий пошук)",
+									"disabled": true
+								},
+								{
+									"key": "author_id",
+									"value": "",
+									"description": "Фільтр за ID автора",
+									"disabled": true
+								}
+							],
+							"description": "Отримує список всіх книг з підтримкою пагінації, пошуку за назвою та фільтрації за автором.\n\n**Параметри запиту:**\n- `page` (опціонально) - номер сторінки (за замовчуванням: 1)\n- `per_page` (опціонально) - кількість записів на сторінці (за замовчуванням: 10, максимум: 100)\n- `title` (опціонально) - пошук за назвою книги (case-insensitive, частковий пошук)\n- `author_id` (опціонально) - фільтр за ID автора\n\n**Відповідь:**\n- `books` - масив об'єктів книг\n- `pagination` - об'єкт з інформацією про пагінацію (current_page, per_page, total_pages, total_count)"
+						},
+						"response": [
+							{
+								"name": "Success - All Books",
+								"originalRequest": {
+									"method": "GET",
+									"header": [
+										{
+											"key": "Accept",
+											"value": "application/json",
+											"type": "text"
+										}
+									],
+									"url": {
+										"raw": "{{base_url}}/api/v1/books",
+										"host": [
+											"{{base_url}}"
+										],
+										"path": [
+											"api",
+											"v1",
+											"books"
+										]
+									}
+								},
+								"status": "OK",
+								"code": 200,
+								"_postman_previewlanguage": "json",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": "{\n    \"books\": [\n        {\n            \"id\": 1,\n            \"title\": \"Ruby on Rails Guide\",\n            \"year\": 2020,\n            \"description\": \"Comprehensive guide to Ruby on Rails\",\n            \"created_at\": \"2024-01-15T10:30:00.000Z\",\n            \"updated_at\": \"2024-01-15T10:30:00.000Z\",\n            \"author\": {\n                \"id\": 1,\n                \"name\": \"John Doe\",\n                \"bio\": \"Experienced developer\",\n                \"active\": true\n            }\n        },\n        {\n            \"id\": 2,\n            \"title\": \"JavaScript Mastery\",\n            \"year\": 2021,\n            \"description\": \"Learn JavaScript from scratch\",\n            \"created_at\": \"2024-01-16T11:00:00.000Z\",\n            \"updated_at\": \"2024-01-16T11:00:00.000Z\",\n            \"author\": {\n                \"id\": 2,\n                \"name\": \"Jane Smith\",\n                \"bio\": \"JavaScript expert\",\n                \"active\": true\n            }\n        }\n    ],\n    \"pagination\": {\n        \"current_page\": 1,\n        \"per_page\": 10,\n        \"total_pages\": 1,\n        \"total_count\": 2\n    }\n}"
+							},
+							{
+								"name": "Success - With Pagination",
+								"originalRequest": {
+									"method": "GET",
+									"header": [
+										{
+											"key": "Accept",
+											"value": "application/json",
+											"type": "text"
+										}
+									],
+									"url": {
+										"raw": "{{base_url}}/api/v1/books?page=1&per_page=2",
+										"host": [
+											"{{base_url}}"
+										],
+										"path": [
+											"api",
+											"v1",
+											"books"
+										],
+										"query": [
+											{
+												"key": "page",
+												"value": "1"
+											},
+											{
+												"key": "per_page",
+												"value": "2"
+											}
+										]
+									}
+								},
+								"status": "OK",
+								"code": 200,
+								"_postman_previewlanguage": "json",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": "{\n    \"books\": [\n        {\n            \"id\": 1,\n            \"title\": \"Ruby on Rails Guide\",\n            \"year\": 2020,\n            \"description\": \"Comprehensive guide to Ruby on Rails\",\n            \"created_at\": \"2024-01-15T10:30:00.000Z\",\n            \"updated_at\": \"2024-01-15T10:30:00.000Z\",\n            \"author\": {\n                \"id\": 1,\n                \"name\": \"John Doe\",\n                \"bio\": \"Experienced developer\",\n                \"active\": true\n            }\n        },\n        {\n            \"id\": 2,\n            \"title\": \"JavaScript Mastery\",\n            \"year\": 2021,\n            \"description\": \"Learn JavaScript from scratch\",\n            \"created_at\": \"2024-01-16T11:00:00.000Z\",\n            \"updated_at\": \"2024-01-16T11:00:00.000Z\",\n            \"author\": {\n                \"id\": 2,\n                \"name\": \"Jane Smith\",\n                \"bio\": \"JavaScript expert\",\n                \"active\": true\n            }\n        }\n    ],\n    \"pagination\": {\n        \"current_page\": 1,\n        \"per_page\": 2,\n        \"total_pages\": 2,\n        \"total_count\": 4\n    }\n}"
+							},
+							{
+								"name": "Success - Search by Title",
+								"originalRequest": {
+									"method": "GET",
+									"header": [
+										{
+											"key": "Accept",
+											"value": "application/json",
+											"type": "text"
+										}
+									],
+									"url": {
+										"raw": "{{base_url}}/api/v1/books?title=Ruby",
+										"host": [
+											"{{base_url}}"
+										],
+										"path": [
+											"api",
+											"v1",
+											"books"
+										],
+										"query": [
+											{
+												"key": "title",
+												"value": "Ruby"
+											}
+										]
+									}
+								},
+								"status": "OK",
+								"code": 200,
+								"_postman_previewlanguage": "json",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": "{\n    \"books\": [\n        {\n            \"id\": 1,\n            \"title\": \"Ruby on Rails Guide\",\n            \"year\": 2020,\n            \"description\": \"Comprehensive guide to Ruby on Rails\",\n            \"created_at\": \"2024-01-15T10:30:00.000Z\",\n            \"updated_at\": \"2024-01-15T10:30:00.000Z\",\n            \"author\": {\n                \"id\": 1,\n                \"name\": \"John Doe\",\n                \"bio\": \"Experienced developer\",\n                \"active\": true\n            }\n        },\n        {\n            \"id\": 4,\n            \"title\": \"Advanced Ruby\",\n            \"year\": 2022,\n            \"description\": \"Advanced Ruby programming techniques\",\n            \"created_at\": \"2024-01-18T09:00:00.000Z\",\n            \"updated_at\": \"2024-01-18T09:00:00.000Z\",\n            \"author\": {\n                \"id\": 1,\n                \"name\": \"John Doe\",\n                \"bio\": \"Experienced developer\",\n                \"active\": true\n            }\n        }\n    ],\n    \"pagination\": {\n        \"current_page\": 1,\n        \"per_page\": 10,\n        \"total_pages\": 1,\n        \"total_count\": 2\n    }\n}"
+							},
+							{
+								"name": "Success - Filter by Author ID",
+								"originalRequest": {
+									"method": "GET",
+									"header": [
+										{
+											"key": "Accept",
+											"value": "application/json",
+											"type": "text"
+										}
+									],
+									"url": {
+										"raw": "{{base_url}}/api/v1/books?author_id=1",
+										"host": [
+											"{{base_url}}"
+										],
+										"path": [
+											"api",
+											"v1",
+											"books"
+										],
+										"query": [
+											{
+												"key": "author_id",
+												"value": "1"
+											}
+										]
+									}
+								},
+								"status": "OK",
+								"code": 200,
+								"_postman_previewlanguage": "json",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": "{\n    \"books\": [\n        {\n            \"id\": 1,\n            \"title\": \"Ruby on Rails Guide\",\n            \"year\": 2020,\n            \"description\": \"Comprehensive guide to Ruby on Rails\",\n            \"created_at\": \"2024-01-15T10:30:00.000Z\",\n            \"updated_at\": \"2024-01-15T10:30:00.000Z\",\n            \"author\": {\n                \"id\": 1,\n                \"name\": \"John Doe\",\n                \"bio\": \"Experienced developer\",\n                \"active\": true\n            }\n        },\n        {\n            \"id\": 3,\n            \"title\": \"Python Basics\",\n            \"year\": 2019,\n            \"description\": \"Introduction to Python\",\n            \"created_at\": \"2024-01-17T14:20:00.000Z\",\n            \"updated_at\": \"2024-01-17T14:20:00.000Z\",\n            \"author\": {\n                \"id\": 1,\n                \"name\": \"John Doe\",\n                \"bio\": \"Experienced developer\",\n                \"active\": true\n            }\n        },\n        {\n            \"id\": 4,\n            \"title\": \"Advanced Ruby\",\n            \"year\": 2022,\n            \"description\": \"Advanced Ruby programming techniques\",\n            \"created_at\": \"2024-01-18T09:00:00.000Z\",\n            \"updated_at\": \"2024-01-18T09:00:00.000Z\",\n            \"author\": {\n                \"id\": 1,\n                \"name\": \"John Doe\",\n                \"bio\": \"Experienced developer\",\n                \"active\": true\n            }\n        }\n    ],\n    \"pagination\": {\n        \"current_page\": 1,\n        \"per_page\": 10,\n        \"total_pages\": 1,\n        \"total_count\": 3\n    }\n}"
+							},
+							{
+								"name": "Success - Combined Filters",
+								"originalRequest": {
+									"method": "GET",
+									"header": [
+										{
+											"key": "Accept",
+											"value": "application/json",
+											"type": "text"
+										}
+									],
+									"url": {
+										"raw": "{{base_url}}/api/v1/books?title=Ruby&author_id=1",
+										"host": [
+											"{{base_url}}"
+										],
+										"path": [
+											"api",
+											"v1",
+											"books"
+										],
+										"query": [
+											{
+												"key": "title",
+												"value": "Ruby"
+											},
+											{
+												"key": "author_id",
+												"value": "1"
+											}
+										]
+									}
+								},
+								"status": "OK",
+								"code": 200,
+								"_postman_previewlanguage": "json",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": "{\n    \"books\": [\n        {\n            \"id\": 1,\n            \"title\": \"Ruby on Rails Guide\",\n            \"year\": 2020,\n            \"description\": \"Comprehensive guide to Ruby on Rails\",\n            \"created_at\": \"2024-01-15T10:30:00.000Z\",\n            \"updated_at\": \"2024-01-15T10:30:00.000Z\",\n            \"author\": {\n                \"id\": 1,\n                \"name\": \"John Doe\",\n                \"bio\": \"Experienced developer\",\n                \"active\": true\n            }\n        },\n        {\n            \"id\": 4,\n            \"title\": \"Advanced Ruby\",\n            \"year\": 2022,\n            \"description\": \"Advanced Ruby programming techniques\",\n            \"created_at\": \"2024-01-18T09:00:00.000Z\",\n            \"updated_at\": \"2024-01-18T09:00:00.000Z\",\n            \"author\": {\n                \"id\": 1,\n                \"name\": \"John Doe\",\n                \"bio\": \"Experienced developer\",\n                \"active\": true\n            }\n        }\n    ],\n    \"pagination\": {\n        \"current_page\": 1,\n        \"per_page\": 10,\n        \"total_pages\": 1,\n        \"total_count\": 2\n    }\n}"
+							},
+							{
+								"name": "Success - Empty Result",
+								"originalRequest": {
+									"method": "GET",
+									"header": [
+										{
+											"key": "Accept",
+											"value": "application/json",
+											"type": "text"
+										}
+									],
+									"url": {
+										"raw": "{{base_url}}/api/v1/books?title=NonExistent",
+										"host": [
+											"{{base_url}}"
+										],
+										"path": [
+											"api",
+											"v1",
+											"books"
+										],
+										"query": [
+											{
+												"key": "title",
+												"value": "NonExistent"
+											}
+										]
+									}
+								},
+								"status": "OK",
+								"code": 200,
+								"_postman_previewlanguage": "json",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": "{\n    \"books\": [],\n    \"pagination\": {\n        \"current_page\": 1,\n        \"per_page\": 10,\n        \"total_pages\": 0,\n        \"total_count\": 0\n    }\n}"
+							}
+						]
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/books/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"books",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "ID книги"
+								}
+							],
+							"description": "Отримує детальну інформацію про конкретну книгу за її ID.\n\n**Параметри шляху:**\n- `id` (обов'язково) - ID книги\n\n**Відповідь:**\n- Об'єкт книги з повною інформацією, включаючи дані про автора (якщо є)"
+						},
+						"response": [
+							{
+								"name": "Success - Book Found",
+								"originalRequest": {
+									"method": "GET",
+									"header": [
+										{
+											"key": "Accept",
+											"value": "application/json",
+											"type": "text"
+										}
+									],
+									"url": {
+										"raw": "{{base_url}}/api/v1/books/1",
+										"host": [
+											"{{base_url}}"
+										],
+										"path": [
+											"api",
+											"v1",
+											"books",
+											"1"
+										]
+									}
+								},
+								"status": "OK",
+								"code": 200,
+								"_postman_previewlanguage": "json",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": "{\n    \"id\": 1,\n    \"title\": \"Ruby on Rails Guide\",\n    \"year\": 2020,\n    \"description\": \"Comprehensive guide to Ruby on Rails framework\",\n    \"created_at\": \"2024-01-15T10:30:00.000Z\",\n    \"updated_at\": \"2024-01-15T10:30:00.000Z\",\n    \"author\": {\n        \"id\": 1,\n        \"name\": \"John Doe\",\n        \"bio\": \"Experienced developer with 10+ years in web development\",\n        \"active\": true\n    }\n}"
+							},
+							{
+								"name": "Success - Book Without Author",
+								"originalRequest": {
+									"method": "GET",
+									"header": [
+										{
+											"key": "Accept",
+											"value": "application/json",
+											"type": "text"
+										}
+									],
+									"url": {
+										"raw": "{{base_url}}/api/v1/books/5",
+										"host": [
+											"{{base_url}}"
+										],
+										"path": [
+											"api",
+											"v1",
+											"books",
+											"5"
+										]
+									}
+								},
+								"status": "OK",
+								"code": 200,
+								"_postman_previewlanguage": "json",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": "{\n    \"id\": 5,\n    \"title\": \"Orphan Book\",\n    \"year\": 2023,\n    \"description\": \"Book without an author\",\n    \"created_at\": \"2024-01-20T12:00:00.000Z\",\n    \"updated_at\": \"2024-01-20T12:00:00.000Z\",\n    \"author\": null\n}"
+							},
+							{
+								"name": "Error - Book Not Found",
+								"originalRequest": {
+									"method": "GET",
+									"header": [
+										{
+											"key": "Accept",
+											"value": "application/json",
+											"type": "text"
+										}
+									],
+									"url": {
+										"raw": "{{base_url}}/api/v1/books/99999",
+										"host": [
+											"{{base_url}}"
+										],
+										"path": [
+											"api",
+											"v1",
+											"books",
+											"99999"
+										]
+									}
+								},
+								"status": "Not Found",
+								"code": 404,
+								"_postman_previewlanguage": "json",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": "{\n    \"error\": \"Book not found\"\n}"
+							}
+						]
+					},
+					"response": []
+				}
+			],
+			"description": "Ендпоїнти для роботи з книгами"
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string",
+			"description": "Базовий URL API сервера"
+		}
+	]
+}
+

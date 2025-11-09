@@ -1,0 +1,15 @@
+Import Books Report
+
+Hello <%= @user.name %>,
+
+The book import has been completed with the following results:
+
+Status: <%= @import.status.humanize %>
+Books Created: <%= @import.created_count %>
+Books Skipped: <%= @import.skipped_count %>
+Execution Time: <%= @import.execution_time.round(2) %> seconds
+Started At: <%= @import.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
+Completed At: <%= @import.updated_at.strftime("%Y-%m-%d %H:%M:%S") %>
+
+Thank you for using Bookshelf!
+

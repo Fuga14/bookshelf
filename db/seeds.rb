@@ -5,6 +5,31 @@
 # Clear existing data
 Book.destroy_all
 Author.destroy_all
+User.destroy_all
+
+# Create admin user for import reports
+admin_user = User.create!(
+  name: "Admin User",
+  email: "admin@example.com",
+  admin: true
+)
+
+puts "Created admin user: #{admin_user.email}"
+
+# Create regular users for testing
+user1 = User.create!(
+  name: "John Doe",
+  email: "john@example.com",
+  admin: false
+)
+
+user2 = User.create!(
+  name: "Jane Smith",
+  email: "jane@example.com",
+  admin: false
+)
+
+puts "Created #{User.count} users successfully!"
 
 # Create authors
 author1 = Author.create!(
